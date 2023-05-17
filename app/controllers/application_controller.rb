@@ -96,6 +96,9 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     RequestStore.store[:current_user] = current_user
+    if current_user&.pending_reconfirmation? 
+      flash[:notice] = "A confirmation email has been sent to your new email address."
+    end 
   end
 
   def set_current_organization
