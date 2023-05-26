@@ -35,7 +35,7 @@ class Users::PasswordsController < Devise::PasswordsController
     @reset_token ||= @resource.generate_password_reset_token
 
     create_short_url
-    if @resource.casa_org.twilio_enabled?
+    begin
       twilio_service = TwilioService.new(@resource.casa_org)
       sms_params = {
         From: @resource.casa_org.twilio_phone_number,
@@ -43,8 +43,8 @@ class Users::PasswordsController < Devise::PasswordsController
         To: @phone_number
       }
       twilio_service.send_sms(sms_params)
-    else
-      flash[:alert] = "SMS notice was not sent. Twilio Is Not Enabled"
+    rescue => e
+      flash[:alert] = "SMS not sent due to #{e}"
     end
   end
 
