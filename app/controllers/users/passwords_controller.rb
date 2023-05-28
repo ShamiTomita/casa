@@ -43,7 +43,7 @@ class Users::PasswordsController < Devise::PasswordsController
         To: @phone_number
       }
       twilio_service.send_sms(sms_params)
-    rescue => e 
+    rescue => e
       Rails.logger.error("send SMS failed: #{e}") #User doesn't need to know about this
     end
   end
