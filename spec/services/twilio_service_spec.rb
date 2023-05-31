@@ -52,7 +52,7 @@ RSpec.describe TwilioService do
         )
       end
 
-      it "returns an error is the Casa Org does not have Twilio enabled" do
+      it "raises the TwilioServiceCasaOrgError" do
         expect { TwilioService.new(casa_org_twilio_disabled) }.to raise_error(TwilioService::TwilioCasaOrgError)
       end
     end
