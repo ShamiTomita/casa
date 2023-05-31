@@ -103,7 +103,15 @@ class VolunteersController < ApplicationController
         send_sms_to(volunteers_phone_number, "Hello #{@volunteer.display_name}, \n \n Your CASA/Prince George’s County volunteer console account has been reactivated. You can login using the credentials you were already using. \n \n If you have any questions, please contact your most recent Case Supervisor for assistance. \n \n CASA/Prince George’s County")
         redirect_to edit_volunteer_path(@volunteer), notice: "Volunteer reactivation alert sent"
       rescue => error
+<<<<<<< HEAD
         redirect_to edit_volunteer_path(@volunteer), notice: "Volunteer reactivation alert not sent. #{error}"
+=======
+        if error.is_a? NoMethodError # Most likely unverified phone number
+          redirect_to edit_volunteer_path(@volunteer), notice: "SMS Not Sent. Volunteer Phone Number is not verified."
+        else
+          redirect_to edit_volunteer_path(@volunteer), notice: "Volunteer reactivation alert not sent. #{error}"
+        end
+>>>>>>> 3dfeab63 (lint and app controller spec)
       end
     end
   end

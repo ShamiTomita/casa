@@ -396,8 +396,8 @@ RSpec.describe "/volunteers", type: :request do
     it "does not send a reactivation SMS to an unverified phone number" do
     end
 
-    it "does not send a reactivation SMS to an unverified phone number" do 
-    end 
+    it "does not send a reactivation SMS to an unverified phone number" do
+    end
   end
 
   describe "GET /impersonate" do

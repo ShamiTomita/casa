@@ -63,7 +63,6 @@ class ApplicationController < ActionController::Base
       }
       twilio_res = @twilio.send_sms(req_params)
       twilio_res.error_code.nil? ? "sent" : "error"
-
     rescue TwilioService::TwilioCasaOrgError => error
       @error = error
       "error"
@@ -74,14 +73,21 @@ class ApplicationController < ActionController::Base
       # https://www.twilio.com/docs/errors/21608
       @error = "Phone number is unverifiied"
       "error"
-    rescue StandardError #unverfied error isnt picked up by Twilio::Rest::RestError 
-      #https://www.twilio.com/docs/errors/21608
+    rescue Twilio::REST::RestError => error
+      @error = error
+      "error" # Find a better description for this
+    rescue # unverfied error isnt picked up by Twilio::Rest::RestError
+      # https://www.twilio.com/docs/errors/21608
       @error = "Phone number is unverifiied"
-      "unverified"
+      "error"
     end
   end
 
+<<<<<<< HEAD
   def sms_acct_creation_notice(resource_name, sms_status)
+=======
+  def sms_acct_creation_notice(resource_name, sms_status) # switch case implement here (should read mutually exclusive)
+>>>>>>> 3dfeab63 (lint and app controller spec)
     case sms_status
     when "blank"
       "New #{resource_name} created successfully."
@@ -89,10 +95,13 @@ class ApplicationController < ActionController::Base
       "New #{resource_name} created successfully. SMS not sent. Error: #{@error}."
     when "sent"
       "New #{resource_name} created successfully. SMS has been sent!"
+<<<<<<< HEAD
     end
 
     if sms_status === "unverified"
       return "New #{resource_name} created successfully. SMS not sent. #{@error}."
+=======
+>>>>>>> 3dfeab63 (lint and app controller spec)
     end
   end
 
