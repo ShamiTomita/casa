@@ -90,8 +90,9 @@ class ApplicationController < ActionController::Base
     when "sent"
       "New #{resource_name} created successfully. SMS has been sent!"
     end
+
     if sms_status === "unverified"
-      "New #{resource_name} created successfully. SMS not sent. #{@error}."
+      return "New #{resource_name} created successfully. SMS not sent. #{@error}."
     end
   end
 
